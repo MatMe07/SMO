@@ -1,4 +1,6 @@
-﻿using System.Text;
+﻿using SMO.Pages.Mnogokanal;
+using SMO.Pages.Odnokanal;
+using System.Text;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
@@ -19,6 +21,18 @@ namespace SMO
         public MainWindow()
         {
             InitializeComponent();
+        }
+
+        private void MenuItem_Click(object sender, RoutedEventArgs e)
+        {
+            string tag_ = (sender as MenuItem).Tag.ToString() ?? "" ;
+            mainFrame.Navigate(new OdnokanalPage());
+        }
+
+        private void MenuItemOtkaz_Click(object sender, RoutedEventArgs e)
+        {
+            string tag_ = (sender as MenuItem).Tag.ToString() ?? "";
+            mainFrame.Navigate(new MnogokanalPage());
         }
     }
 }
