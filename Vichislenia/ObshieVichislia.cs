@@ -1,68 +1,48 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Globalization;
 
 namespace Vichislenia
 {
-    static class ObshieVichislia
+    public static class ObshieVichislia
     {
+        public static string Format(double value) =>
+            value.ToString("0.######", CultureInfo.InvariantCulture);
 
-        public static (string, double) MU(double t_obs)
+        public static double Factorial(int n)
         {
-            double mu = 1 / t_obs;
-            return ($"mu = 1 / t_обс = 1 / {t_obs} = {mu}", mu);
+            double result = 1;
+            for (int i = 2; i <= n; i++)
+                result *= i;
+            return result;
         }
 
-        public static (string, double) Среднее_время_ожидания(double lm)
+        public static double Pk(double rho, int k) =>
+            Math.Pow(rho, k) / Factorial(k);
+
+        public static double SumFactorialPowers(double rho, int n)
         {
-            double t_oj = 1 / lm;
-            return ($"t_oj = 1 / lm = 1 / {lm} = {t_oj}", t_oj);
+            double sum = 0;
+            for (int k = 0; k <= n; k++)
+                sum += Pk(rho, k);
+            return sum;
         }
 
-        public static (string, double) Интенсивность_нагрузки(double lm, double mu)
-        {
-            double ro = lm / mu;
-            return ($"ro = lm/mu = {lm}/{mu} = {ro}", ro);
-        }
+        public static CalculationStep LoadFactor(double lambda, double mu, double rho) =>
+            new("Интенсивность нагрузки ρ",
+                $"ρ = λ/μ = {Format(lambda)}/{Format(mu)}", rho);
 
-        public static (string, double) абсолютную_пропускную_способностьA(double lm, double mu)
-        {
+        public static CalculationStep RelativeThroughput(double pOtk, double q) =>
+            new("Относительная пропускная способность Q",
+                $"Q = 1 - P_отк = 1 - {Format(pOtk)}", q);
 
-            double A = lm * mu / (lm + mu);
+        public static CalculationStep AbsoluteThroughput(double lambda, double q, double a) =>
+            new("Абсолютная пропускная способность A",
+                $"A = λ·Q = {Format(lambda)}·{Format(q)}", a);
 
-            return ($"A = lm*mu / (lm + mu) = {lm}*{mu} / ({lm} + {mu}) = {A}", A);
-        }
+        public static CalculationStep EffectiveLambda(double lambda, double q, double lambdaEff) =>
+            new("Эффективная интенсивность λ_eff",
+                $"λ_eff = λ·(1 - P_отк) = λ·Q = {Format(lambda)}·{Format(q)}", lambdaEff);
 
-        public static (string, double) вероятность_отказаОдноканалP(double lm, double mu)
-        {
-            double P = lm / (lm + mu);
-            return ($"P_отк = lm / (lm + mu) = {lm} / {lm} + {mu} = {P}", P);
-        }
-
-        public static (string, double) относительную_пропускную_способностьQ(double lm, double mu)
-        {
-            double Q = mu / (lm + mu);
-            return ($"Q = mu / (lm + mu) = {mu} / ({lm} + {mu}) = {Q}", Q);
-
-        }
-        public static long FactorialRecursive(int n)
-        {
-            if (n <= 1) return 1;
-            return n * FactorialRecursive(n - 1);
-        }
-        public static (string, double) ВероятностьСВичисл(double ro, int k)
-        {
-            double p = Math.Pow(ro, k) / FactorialRecursive(k);
-            return ($"p{k} = ro^{k} / k! = 2^{k} / {k}!", p);
-        }
-        public static (string, double) Вероятность(double ro, int k)
-        {
-            double p = Math.Pow(ro, k) / FactorialRecursive(k);
-            return ($"2^{k} / {k}!", p);
-        }
-
+        public static CalculationStep RefusalProbability(double pOtk, string formula) =>
+            new("Вероятность отказа P_отк", formula, pOtk);
     }
-
 }

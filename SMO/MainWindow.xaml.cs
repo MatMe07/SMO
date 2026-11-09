@@ -1,21 +1,10 @@
-﻿using SMO.Pages.Mnogokanal;
-using SMO.Pages.Odnokanal;
-using System.Text;
+﻿using SMO.Pages;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
+using Vichislenia;
 
 namespace SMO
 {
-    /// <summary>
-    /// Interaction logic for MainWindow.xaml
-    /// </summary>
     public partial class MainWindow : Window
     {
         public MainWindow()
@@ -25,14 +14,22 @@ namespace SMO
 
         private void MenuItem_Click(object sender, RoutedEventArgs e)
         {
-            string tag_ = (sender as MenuItem).Tag.ToString() ?? "" ;
-            mainFrame.Navigate(new OdnokanalPage());
+            if (sender is not MenuItem menuItem || menuItem.Tag is null)
+                return;
+
+            SmoType type = ParseType(menuItem.Tag.ToString() ?? "");
+            mainFrame.Navigate(new SmoPage(type));
         }
 
-        private void MenuItemOtkaz_Click(object sender, RoutedEventArgs e)
+        private static SmoType ParseType(string tag) => tag switch
         {
-            string tag_ = (sender as MenuItem).Tag.ToString() ?? "";
-            mainFrame.Navigate(new MnogokanalPage());
-        }
+            "Odno_s_otkaz" => SmoType.SingleRefusals,
+            "Odno_s_ogranich" => SmoType.SingleLimitedQueue,
+            "Odno_s_neogra" => SmoType.SingleUnlimitedQueue,
+            "Mnogo_s_otkaz" => SmoType.MultiRefusals,
+            "Mnogo_s_ogranich" => SmoType.MultiLimitedQueue,
+            "Mnogo_s_neogra" => SmoType.MultiUnlimitedQueue,
+            _ => throw new ArgumentOutOfRangeException(nameof(tag), tag, "Неизвестный тип СМО")
+        };
     }
 }

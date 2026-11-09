@@ -1,0 +1,91 @@
+<Page x:Class="SMO.Pages.SmoPage"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+      mc:Ignorable="d"
+      d:DesignHeight="450" d:DesignWidth="800" d:Background="White"
+      Title="SmoPage">
+
+    <Grid Margin="10">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+
+        <TextBlock x:Name="TitleText" Grid.Row="0" FontSize="16" FontWeight="Bold" Margin="0,0,0,10"/>
+
+        <GroupBox Grid.Row="1" Header="Исходные данные" Margin="0,0,0,10">
+            <StackPanel Margin="8">
+                <Grid x:Name="LambdaRow" Margin="0,0,0,6">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="270"/>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
+                    <TextBlock Text="Интенсивность потока заявок λ:" VerticalAlignment="Center"/>
+                    <StackPanel Grid.Column="1" Orientation="Horizontal">
+                        <TextBox x:Name="LambdaBox" Width="100" Text="1"/>
+                        <ComboBox x:Name="LambdaUnitBox" Width="70" Margin="6,0,0,0" SelectedIndex="1">
+                            <ComboBoxItem Content="мин"/>
+                            <ComboBoxItem Content="ч"/>
+                            <ComboBoxItem Content="сут"/>
+                        </ComboBox>
+                    </StackPanel>
+                </Grid>
+
+                <Grid x:Name="ServiceRow" Margin="0,0,0,6">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="270"/>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
+                    <TextBlock Text="Обслуживание (μ или t_обс):" VerticalAlignment="Center"/>
+                    <StackPanel Grid.Column="1" Orientation="Horizontal">
+                        <RadioButton x:Name="MuRadio" Content="μ" IsChecked="True" VerticalAlignment="Center"/>
+                        <RadioButton x:Name="TObsRadio" Content="t_обс" Margin="12,0,0,0" VerticalAlignment="Center"/>
+                        <TextBox x:Name="ServiceBox" Width="100" Margin="12,0,0,0" Text="1"/>
+                        <ComboBox x:Name="ServiceUnitBox" Width="70" Margin="6,0,0,0" SelectedIndex="1">
+                            <ComboBoxItem Content="мин"/>
+                            <ComboBoxItem Content="ч"/>
+                            <ComboBoxItem Content="сут"/>
+                        </ComboBox>
+                    </StackPanel>
+                </Grid>
+
+                <Grid x:Name="ChannelsRow" Margin="0,0,0,6">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="270"/>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
+                    <TextBlock Text="Число каналов n:" VerticalAlignment="Center"/>
+                    <TextBox x:Name="ChannelsBox" Grid.Column="1" Width="100" HorizontalAlignment="Left" Text="2"/>
+                </Grid>
+
+                <Grid x:Name="QueueRow" Margin="0,0,0,6">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="270"/>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
+                    <TextBlock Text="Длина очереди m:" VerticalAlignment="Center"/>
+                    <TextBox x:Name="QueueBox" Grid.Column="1" Width="100" HorizontalAlignment="Left" Text="3"/>
+                </Grid>
+            </StackPanel>
+        </GroupBox>
+
+        <StackPanel Grid.Row="2" Orientation="Horizontal" Margin="0,0,0,10">
+            <Button Content="Рассчитать" Width="120" Click="Calculate_Click"/>
+            <Button Content="Экспорт в Excel" Width="140" Margin="10,0,0,0" Click="Export_Click"/>
+        </StackPanel>
+
+        <GroupBox Grid.Row="3" Header="Результаты">
+            <ScrollViewer Margin="8" VerticalScrollBarVisibility="Auto">
+                <StackPanel>
+                    <TextBlock x:Name="StepsText" FontFamily="Consolas" TextWrapping="Wrap"/>
+                    <TextBlock x:Name="ResultsText" FontFamily="Consolas" TextWrapping="Wrap" Margin="0,10,0,0"/>
+                    <TextBlock x:Name="ErrorText" TextWrapping="Wrap" Margin="0,10,0,0"/>
+                </StackPanel>
+            </ScrollViewer>
+        </GroupBox>
+    </Grid>
+</Page>

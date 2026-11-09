@@ -18,9 +18,9 @@
                 <MenuItem Header="Одноканальная СМО с неограниченной очередью"  Click="MenuItem_Click" Tag="Odno_s_neogra"/>
             </MenuItem>
             <MenuItem Header="Многоканальные СМО">
-                <MenuItem Header="Многоканальная СМО с отказами в обслуживании" Click="MenuItemOtkaz_Click" Tag="Mnogo_s_otkaz"/>
-                <MenuItem Header="Многоканальная СМО с ограниченной длиной очереди" Click="MenuItemOtkaz_Click" Tag="Mnogo_s_ogranich"/>
-                <MenuItem Header="Многоканальная СМО с неограниченной очередью" Click="MenuItemOtkaz_Click" Tag="Mnogo_s_neogra"/>
+                <MenuItem Header="Многоканальная СМО с отказами в обслуживании" Click="MenuItem_Click" Tag="Mnogo_s_otkaz"/>
+                <MenuItem Header="Многоканальная СМО с ограниченной длиной очереди" Click="MenuItem_Click" Tag="Mnogo_s_ogranich"/>
+                <MenuItem Header="Многоканальная СМО с неограниченной очередью" Click="MenuItem_Click" Tag="Mnogo_s_neogra"/>
             </MenuItem>
         </Menu>
         <Frame Grid.Row="1" Name="mainFrame" NavigationUIVisibility="Hidden"/>
